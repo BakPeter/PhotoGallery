@@ -7,8 +7,10 @@ import android.net.Uri;
 import androidx.fragment.app.Fragment;
 
 public class PhotoPageActivity extends SingleFragmentActivity {
+    public static final String TAG = PhotoPageActivity.class.getSimpleName();
 
-    public static Intent newIntent(Context context, Uri photoPageUri){
+
+    public static Intent newIntent(Context context, Uri photoPageUri) {
         Intent i = new Intent(context, PhotoPageActivity.class);
         i.setData(photoPageUri);
         return i;

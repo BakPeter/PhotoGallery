@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 public class PhotoPageFragment extends VisibleFragment {
     private static final String ARG_URI = "photo_page_url";
@@ -66,6 +67,22 @@ public class PhotoPageFragment extends VisibleFragment {
         });
         mWebView.loadUrl(mUri.toString());
 
+        final  Fragment me = this;
+        getActivity()
+                .getOnBackPressedDispatcher()
+                .addCallback(this, new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        if (mWebView.canGoBack()) {
+                            mWebView.goBack();
+                        } else {
+                            //getActivity().getSupportFragmentManager().beginTransaction().remove(me).commit();
+                            getActivity().finish();
+                        }
+                    }
+                });
+
         return v;
     }
+
 }
