@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bigenrdranch.android.photogallery">
 
+    <permission
+        android:name="com.bigenrdranch.anroid.photogallery.PRIVATE"
+        android:protectionLevel="signature" />
+
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="com.bigenrdranch.anroid.photogallery.PRIVATE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +28,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".PollService" />
+
+        <receiver
+            android:name=".StartupReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".NotificationReceiver"
+            android:exported="false" >
+            <intent-filter
+                android:priority="-999">
+                <action
+                    android:name="com.bignerdranch.android.photogallery.SHOW_NOTIFICATION" />
+            </intent-filter>
+
+        </receiver>
+
     </application>
 
 </manifest>
